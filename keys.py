@@ -1,0 +1,4 @@
+consumerKey = ""
+consumerSecret = ""
+myAccessToken = ""
+myAccessTokenSecret = ""
