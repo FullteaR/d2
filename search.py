@@ -23,7 +23,7 @@ def getDelTweet(screen_name):
     nowTL=set(nowTL)
     retval=[]
     for tweetId in set(fullTweetIds)-nowTL:
-        retval.append(fullTL[tweetId])
+        retval.append(fullTL[str(tweetId)])
     return retval
 
 
@@ -33,7 +33,7 @@ def _getNowTL(id,since):
         tweets = api.user_timeline(id=id, page=i)
         for tweet in tweets:
             yield tweet
-            if int(tweet.id)<since:
+            if int(tweet.id)<=since:
                 return
         i += 1
         if len(tweets) == 0:
