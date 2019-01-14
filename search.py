@@ -50,8 +50,8 @@ def _getFullTL(id):
         except:
             continue
         for line in fp:
-            tweet = json.loads(line)
-            retval[tweet["id"]] = tweet
+            tweet = json.loads(line.split("\t")[1])
+            retval[line.split("\t")[0]] = tweet
     return retval
 
 
