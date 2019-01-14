@@ -22,7 +22,7 @@ def getDelTweet(screen_name):
         nowTL.append(tweet.id)
     nowTL=set(nowTL)
     retval=[]
-    for tweetId in nowTL-set(fullTweetIds):
+    for tweetId in set(fullTweetIds)-nowTL:
         retval.append(fullTL[tweetId])
     return retval
 
