@@ -11,9 +11,11 @@ auth.set_access_token(myAccessToken, myAccessTokenSecret)
 api = tweepy.API(auth)
 
 
-def getDelTweet(screen_name):
+def getDelTweet(id):
+    """
     userdata = api.get_user(screen_name)._json
     id = userdata["id"]
+    """
     fullTL=_getFullTL(id)
     fullTweetIds=[int(key) for key in fullTL.keys()]
     oldestTweetId=min(fullTweetIds)
@@ -23,7 +25,7 @@ def getDelTweet(screen_name):
     nowTL=set(nowTL)
     retval=[]
     for tweetId in set(fullTweetIds)-nowTL:
-        retval.append(fullTL[str(tweetId)])
+        retval.append(fullTL[tweetId])
     return retval
 
 
@@ -33,7 +35,7 @@ def _getNowTL(id,since):
         tweets = api.user_timeline(id=id, page=i)
         for tweet in tweets:
             yield tweet
-            if int(tweet.id)<=since:
+            if int(tweet.id)<since:
                 return
         i += 1
         if len(tweets) == 0:
@@ -55,7 +57,6 @@ def _getFullTL(id):
     return retval
 
 
-if __name__ == "__main__":
-    screen_name=sys.argv[1]
-    for i in getDelTweet(screen_name):
-        print(i)
+for friend in api.friends_ids():
+    for tweet in getDelTweet(friend):
+        print(tweet)
