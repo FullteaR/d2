@@ -18,14 +18,16 @@ def userId(screen_name):
 def getDelTweet(id):
     fullTL=_getFullTL(id)
     fullTweetIds=[int(key) for key in fullTL.keys()]
+    retval=[]
+    if len(fullTweetIds)==0:
+        return retval
     oldestTweetId=min(fullTweetIds)
     nowTL=[]
     for tweet in _getNowTL(id,oldestTweetId):
         nowTL.append(tweet.id)
     nowTL=set(nowTL)
-    retval=[]
     for tweetId in set(fullTweetIds)-nowTL:
-        retval.append(fullTL[tweetId])
+        retval.append(fullTL[str(tweetId)])
     return retval
 
 
@@ -62,11 +64,14 @@ def _getFullTL(id):
 
 
 if __name__=="__main__":
-    if sys.argc==1:
-        friend=api.friend_ids()
+    if len(sys.argv)==1:
+        friend=api.friends_ids()
     else:
         friend=[userId(screen_name) for screen_name in sys.argv[1::]]
 
     for friend in api.friends_ids():
         for tweet in getDelTweet(friend):
-            print(tweet)
+            print(tweet["user"]["name"],"\t",tweet["user"]["screen_name"])
+            print(tweet["created_at"])
+            print(tweet["text"])
+            print()
