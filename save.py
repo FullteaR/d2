@@ -28,7 +28,7 @@ while True:
                     fp.write(tweet.id_str)
                     fp.write("\t")
                     fp.write(json.dumps(tweet._json, ensure_ascii=False))
-                    fp.write("\n")
+                    fp.write("\t0\n")
             since = tl[-1].id
             with open("./since.txt", "w") as fp_since:
                 fp_since.write(str(since))

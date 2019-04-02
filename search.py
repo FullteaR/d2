@@ -48,7 +48,7 @@ def _getNowTL(id,since):
             continue
 
 
-def _getFullTL(id):
+def _getFullTL(id,checked=True):
     retval = {}
     folders = os.listdir("./data")
     for folder in folders:
@@ -58,6 +58,9 @@ def _getFullTL(id):
         except:
             continue
         for line in fp:
+            if checked==False:
+                if int(line.split("\t")[2])==1:
+                    continue
             tweet = json.loads(line.split("\t")[1])
             retval[line.split("\t")[0]] = tweet
     return retval
