@@ -43,7 +43,7 @@ def _getNowTL(id,since):
             i += 1
             if len(tweets) == 0:
                 return
-        except tweepy.error.RateLimitError:
+        except tweepy.error.RateLimitError or tweepy.error.ConnectionError:
             time.sleep(60)
             continue
 
@@ -68,11 +68,11 @@ def _getFullTL(id,checked=True):
 
 if __name__=="__main__":
     if len(sys.argv)==1:
-        friend=api.friends_ids()
+        friends=api.friends_ids()
     else:
-        friend=[userId(screen_name) for screen_name in sys.argv[1::]]
+        friends=[userId(screen_name) for screen_name in sys.argv[1::]]
 
-    for friend in api.friends_ids():
+    for friend in friends:
         for tweet in getDelTweet(friend):
             print(tweet["user"]["name"],"\t",tweet["user"]["screen_name"])
             print(tweet["created_at"])
