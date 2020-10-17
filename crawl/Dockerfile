@@ -1,12 +1,8 @@
-FROM golang:latest
+FROM python:3.8.1
 
-RUN apt update
+RUN pip install mysqlclient tweepy
 
-RUN go get github.com/bitly/go-nsq
-RUN go get github.com/go-sql-driver/mysql
+ADD crawl/*.py /
+ADD credential.json /
 
-COPY ./crawl/*.go /go/
-COPY ./credential.json /go/
-RUN go fmt *.go
-RUN go build -o twitter_crawler
-CMD ./twitter_crawler
+CMD python main.py
