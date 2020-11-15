@@ -39,6 +39,7 @@ while True:
             data = {"tweet_id": tweet_id, "created_at": str(
                 created_at), "text": text, "user_id": user_id, "tweet_json": tweet_json}
             c.execute(query, data)
-        conn.commit()
-    except:
-        time.sleep(60)
+            conn.commit()
+    except Exception as e:
+        print(e)
+        time.sleep(60*5)
