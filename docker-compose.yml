@@ -18,5 +18,14 @@ services:
             dockerfile: ./crawl/Dockerfile
         image: frt/d2_crawl
         container_name: d2_crawl
+        
+    analytics:
+        build:
+            context: .
+            dockerfile: ./analytics/Dockerfile
+        image: frt/d2_analytics
+        container_name: d2_analytics
         ports:
-         - 8888:8888
+            - 127.0.0.1:8888:8888
+        volumes:
+            - ./analytics/src:/mnt
